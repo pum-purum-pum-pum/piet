@@ -43,7 +43,7 @@ cfg_if::cfg_if! {
         mod backend;
     }
     else if #[cfg(target_os = "macos")] {
-        #[path = "cg_back.rs"]
+        #[path = "skia_back.rs"]
         mod backend;
     } else if #[cfg(target_os = "windows")] {
         #[path = "direct2d_back.rs"]

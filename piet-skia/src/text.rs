@@ -109,9 +109,12 @@ fn build_typeface(defaults: &util::LayoutDefaults) -> Typeface {
         piet::FontStyle::Italic => Slant::Italic,
     };
     let font_style = FontStyle::new(weight, width, slant);
-    let jbf = include_bytes!("../JetBrainsMono-Regular.ttf");
-    Typeface::from_data(skia_safe::Data::new_copy(&jbf[..]), None).unwrap()
-    //Typeface::new(defaults.font.name(), font_style).unwrap()
+    if let Some(tf) = Typeface::new(defaults.font.name(), font_style) {
+        tf
+    } else {
+        let jbf = include_bytes!("../JetBrainsMono-Regular.ttf");
+        Typeface::from_data(skia_safe::Data::new_copy(&jbf[..]), None).unwrap()
+    }
 }
 
 // It's convinient to have a separate method for creating paragraph, cause it doesn't have Clone

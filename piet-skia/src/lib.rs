@@ -256,9 +256,17 @@ impl<'a> RenderContext for SkiaRenderContext<'a> {
             Some(LineCap::Square) => Cap::Square,
             None => Cap::Butt,
         };
+        let dash_effect = style.dash.clone().and_then(|dash| {
+            let offset = dash.1 as f32;
+            let dashes: Vec<f32> = dash.0.iter().map(|v| *v as f32).collect();
+            skia_safe::PathEffect::dash(&dashes, offset)
+        });
         let path = create_path(shape);
-        let path_effect = PathEffect::stroke(width as f32, line_join, line_cap, None);
-        paint.set_path_effect(path_effect);
+        paint.set_style(skia_safe::PaintStyle::Stroke);
+        paint.set_stroke_cap(line_cap);
+        paint.set_stroke_join(line_join);
+        paint.set_stroke_width(width as f32);
+        paint.set_path_effect(dash_effect);
         self.canvas.draw_path(&path, &paint);
     }
 

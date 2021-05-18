@@ -9,7 +9,6 @@ use skia_safe;
 use skia_safe::canvas::SrcRectConstraint;
 use skia_safe::effects::gradient_shader::{linear, radial};
 use skia_safe::paint::{Cap, Join};
-use skia_safe::path_effect::PathEffect;
 use skia_safe::shader::Shader;
 use skia_safe::ClipOp;
 use skia_safe::{
